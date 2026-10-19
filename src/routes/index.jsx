@@ -145,9 +145,9 @@ function Index() {
       <section id="hero" className="hero">
         <div className="hero-info">
           <Note>Overlay · Información principal</Note>
-          <h1 className="hero-title">Nombre<br />Apellido</h1>
-          <p className="hero-role">Desarrollador Web Frontend / Web 3D</p>
-          <p className="hero-tagline">Frase corta de valor: construyo experiencias web que se sienten como objetos.</p>
+          <h1 className="hero-title">Sebastian<br />Oviedo</h1>
+          <p className="hero-role">TECNÓLOGO EN DESARROLLO DE SOFTWARE - ESTUDIANTE ING DE SISTEMAS</p>
+          <p className="hero-tagline">Web 3D e interacción táctil: dándole presencia física al código</p>
           <div className="hero-actions">
             <a href="#projects" onClick={() => setIdx(2)} className="btn-primary">Ver Proyectos</a>
             <a href="#contact" onClick={() => setIdx(5)} className="btn-outline">Contactar</a>
