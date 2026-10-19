@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { education, experience, languages, tools } from "../data/portfolioData";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -215,16 +216,48 @@ function Index() {
       </Section>
 
       <Section id="timeline" n="05" title="Experiencia y Formación">
-        <ol className="timeline">
-          {[["2025 — Hoy", "Experiencia laboral", "Rol · Empresa"], ["2024", "Prácticas", "Rol · Empresa"], ["2020 — 2024", "Formación universitaria", "Carrera · Universidad"], ["2023", "Cursos y certificaciones", "Certificación · Entidad"]].map(([d, k, r]) => (
-            <li key={k}>
-              <span className="timeline-dot" />
-              <Note>{d} · {k}</Note>
-              <h3 className="card-title">{r}</h3>
-              <div className="stack-sm mt-2 max-w-xl"><Line /><Line w="75%" /></div>
-            </li>
-          ))}
-        </ol>
+        <div className="grid grid-2" style={{ gap: 40 }}>
+          <div>
+            <h3 className="card-title mb-4">Experiencia laboral</h3>
+            <ol className="timeline">
+              {experience.map((e) => (
+                <li key={e.role + e.date}>
+                  <span className="timeline-dot" />
+                  <Note>{e.date} · {e.city}</Note>
+                  <h3 className="card-title">{e.role}</h3>
+                  <p className="project-desc">{e.company}</p>
+                  <ul className="project-desc" style={{ paddingLeft: 18, marginTop: 6 }}>
+                    {e.tasks.map((t) => <li key={t}>{t}</li>)}
+                  </ul>
+                  {e.reference && <p className="project-desc"><Note>Referencia</Note> {e.reference}</p>}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div>
+            <h3 className="card-title mb-4">Formación académica</h3>
+            <ol className="timeline">
+              {education.map((e) => (
+                <li key={e.title}>
+                  <span className="timeline-dot" />
+                  <Note>{e.date} · {e.city}</Note>
+                  <h3 className="card-title">{e.title}</h3>
+                  <p className="project-desc">{e.place}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="grid grid-2 mt-10">
+              <div className="card">
+                <h3 className="card-title mb-4">Idiomas</h3>
+                {languages.map((l) => <div key={l.name} className="skill-row"><span>{l.name}</span><Note>{l.level}</Note></div>)}
+              </div>
+              <div className="card">
+                <h3 className="card-title mb-4">Ofimática</h3>
+                {tools.map((l) => <div key={l.name} className="skill-row"><span>{l.name}</span><Note>{l.level}</Note></div>)}
+              </div>
+            </div>
+          </div>
+        </div>
       </Section>
 
       <Section id="contact" n="06" title="Contacto">
