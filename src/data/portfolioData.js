@@ -33,7 +33,6 @@ export const experience = [
       "Administración y mantenimiento de sitio web dedicado a la capacitación del personal afiliado.",
       "Creación de informes de seguimiento de personal y apoyo en comunicaciones oficiales.",
     ],
-    reference: "Angie Lizzeth Collazos Arango (angie.collazos@regencysa.net)",
   },
 ];
 
