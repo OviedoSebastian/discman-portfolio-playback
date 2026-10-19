@@ -61,11 +61,11 @@ function CtrlBtn({ label, onClick, active }: { label: string; onClick: () => voi
 }
 
 function Diskman({ idx, setIdx, playing, setPlaying, open, setOpen }: any) {
-  const t = TRACKS[idx];
+  const t = TRACKS[idx]!;
   const go = (d: number) => {
     const ni = (idx + d + TRACKS.length) % TRACKS.length;
     setIdx(ni);
-    document.getElementById(TRACKS[ni].id)?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(TRACKS[ni]!.id)?.scrollIntoView({ behavior: "smooth" });
   };
   return (
     <div className="relative w-full max-w-md rounded-[2.5rem] border-2 border-dashed border-foreground/40 bg-card p-6">
@@ -122,7 +122,7 @@ function Index() {
     const t = setInterval(() => {
       setIdx((i) => {
         const ni = (i + 1) % TRACKS.length;
-        document.getElementById(TRACKS[ni].id)?.scrollIntoView({ behavior: "smooth" });
+        document.getElementById(TRACKS[ni]!.id)?.scrollIntoView({ behavior: "smooth" });
         return ni;
       });
     }, 4000);
@@ -133,7 +133,7 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-border bg-card/90 px-5 py-3 backdrop-blur md:px-16">
         <div className="flex h-9 w-9 items-center justify-center rounded border border-dashed border-foreground/50 font-mono text-xs">LOGO</div>
-        <div className="flex-1 truncate font-mono text-xs md:text-center">● Playing: Track {TRACKS[idx].n} - {TRACKS[idx].name}</div>
+        <div className="flex-1 truncate font-mono text-xs md:text-center">● Playing: Track {TRACKS[idx]!.n} - {TRACKS[idx]!.name}</div>
         <button onClick={() => setMuted(!muted)} className="rounded border border-border px-2 py-1 font-mono text-xs hover:bg-muted">{muted ? "🔇 Mute" : "🔊 Sound"}</button>
         <nav className="hidden gap-4 text-sm lg:flex">
           {TRACKS.slice(1).map((t, i) => (
