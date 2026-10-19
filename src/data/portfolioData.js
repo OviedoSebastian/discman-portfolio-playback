@@ -1,7 +1,6 @@
 export const education = [
   { date: "2025", title: "Ingeniería de Sistemas (8.º semestre)", place: "Universidad del Valle", city: "Santiago de Cali, Colombia" },
   { date: "2025", title: "Tecnólogo en Desarrollo de Software", place: "Universidad del Valle", city: "Santiago de Cali, Colombia" },
-  { date: "2021 — Actualidad", title: "Tecnología en Desarrollo de Software (4.º semestre en curso, nocturno)", place: "Universidad del Valle", city: "Santiago de Cali, Colombia" },
   { date: "2021", title: "Auxiliar en Sistemas Informáticos", place: "Institución Politécnico de Occidente", city: "Santiago de Cali, Colombia" },
   { date: "2018", title: "Técnico en Asistencia Administrativa", place: "Servicio Nacional de Aprendizaje (SENA)", city: "Jamundí, Colombia" },
   { date: "2018", title: "Bachiller Técnico Comercial", place: "Institución Educativa Técnico Comercial LITECOM", city: "Jamundí, Colombia" },
