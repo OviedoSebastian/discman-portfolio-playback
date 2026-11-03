@@ -123,22 +123,18 @@ function Index() {
 
   /* El escenario 3D sigue la sección visible al hacer scroll */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            const i = TRACKS.findIndex((t) => t.id === e.target.id);
-            if (i >= 0) setIdx(i);
-          }
-        }
-      },
-      { rootMargin: "-45% 0px -45% 0px" }
-    );
-    TRACKS.forEach((t) => {
-      const el = document.getElementById(t.id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    const onScroll = () => {
+      const mark = window.scrollY + window.innerHeight * 0.45;
+      let current = 0;
+      TRACKS.forEach((t, i) => {
+        const el = document.getElementById(t.id);
+        if (el && el.offsetTop <= mark) current = i;
+      });
+      setIdx(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {

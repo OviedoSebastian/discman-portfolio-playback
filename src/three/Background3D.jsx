@@ -198,11 +198,12 @@ function SceneTimeline() {
     if (group.current) group.current.rotation.y += dt * 0.3;
   });
   return (
-    <group ref={group}>
-      {rings.map((r, i) => (
-        <Wire key={i} geo={<torusGeometry args={[0.5, 0.12, 8, 24]} />} position={r.pos} opacity={0.5} />
-      ))}
-      <Wire geo={<cylinderGeometry args={[0.05, 0.05, 10, 6]} />} opacity={0.3} />
+    <group position={[0, 0, -3]} scale={0.7}>
+      <group ref={group}>
+        {rings.map((r, i) => (
+          <Wire key={i} geo={<torusGeometry args={[0.5, 0.12, 8, 24]} />} position={r.pos} opacity={0.32} />
+        ))}
+      </group>
     </group>
   );
 }
