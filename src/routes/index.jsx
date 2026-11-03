@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { education, experience, languages, tools } from "../data/portfolioData";
+import Background3D from "../three/Background3D";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -116,6 +117,30 @@ function Index() {
   const [playing, setPlaying] = useState(false);
   const [open, setOpen] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  /* El escenario 3D sigue la sección visible al hacer scroll */
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      if (window.scrollY + window.innerHeight >= doc.scrollHeight - 4) {
+        setIdx(TRACKS.length - 1);
+        return;
+      }
+      const mark = window.scrollY + window.innerHeight * 0.45;
+      let current = 0;
+      TRACKS.forEach((t, i) => {
+        const el = document.getElementById(t.id);
+        if (el && el.offsetTop <= mark) current = i;
+      });
+      setIdx(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!playing) return;
@@ -130,7 +155,9 @@ function Index() {
   }, [playing]);
 
   return (
-    <div className="page">
+    <>
+      {mounted && <Background3D track={idx} />}
+      <div className="page">
       <header className="header">
         <div className="header-logo">LOGO</div>
         <div className="header-status">● Playing: Track {TRACKS[idx].n} - {TRACKS[idx].name}</div>
@@ -275,6 +302,7 @@ function Index() {
         </div>
       </Section>
       <footer className="footer">© Nombre Apellido · End of Disc</footer>
-    </div>
+      </div>
+    </>
   );
 }

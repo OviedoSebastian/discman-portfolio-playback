@@ -54,7 +54,15 @@ h1, h2, h3, p { margin: 0; }
 .wf-line { height: 10px; border-radius: 4px; background: var(--placeholder); }
 
 /* ---------- layout ---------- */
-.page { min-height: 100vh; }
+.page { min-height: 100vh; position: relative; z-index: 1; }
+
+/* Fondo 3D fijo detrás de todo el contenido */
+.bg3d {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
 .wrap { max-width: 1152px; margin: 0 auto; }
 
 .header {
