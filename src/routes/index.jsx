@@ -117,6 +117,29 @@ function Index() {
   const [playing, setPlaying] = useState(false);
   const [open, setOpen] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  /* El escenario 3D sigue la sección visible al hacer scroll */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            const i = TRACKS.findIndex((t) => t.id === e.target.id);
+            if (i >= 0) setIdx(i);
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px" }
+    );
+    TRACKS.forEach((t) => {
+      const el = document.getElementById(t.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!playing) return;
