@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { education, experience, languages, tools } from "../data/portfolioData";
+import Background3D from "../three/Background3D";
 
 export const Route = createFileRoute("/")({
   head: () => ({
