@@ -219,11 +219,11 @@ function SceneContact() {
     }
   });
   return (
-    <group>
+    <group position={[0, 0, -4]} scale={0.8}>
       <group ref={knot}>
-        <Wire geo={<torusKnotGeometry args={[1.8, 0.5, 96, 12]} />} opacity={0.4} />
+        <Wire geo={<torusKnotGeometry args={[1.8, 0.5, 64, 8]} />} opacity={0.2} />
       </group>
-      <Wire geo={<sphereGeometry args={[3.6, 16, 12]} />} opacity={0.15} />
+      <Wire geo={<sphereGeometry args={[3.6, 10, 8]} />} opacity={0.05} />
     </group>
   );
 }
