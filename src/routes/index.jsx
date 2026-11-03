@@ -154,7 +154,9 @@ function Index() {
   }, [playing]);
 
   return (
-    <div className="page">
+    <>
+      {mounted && <Background3D track={idx} />}
+      <div className="page">
       <header className="header">
         <div className="header-logo">LOGO</div>
         <div className="header-status">● Playing: Track {TRACKS[idx].n} - {TRACKS[idx].name}</div>
