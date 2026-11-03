@@ -301,6 +301,7 @@ function Index() {
         </div>
       </Section>
       <footer className="footer">© Nombre Apellido · End of Disc</footer>
-    </div>
+      </div>
+    </>
   );
 }
