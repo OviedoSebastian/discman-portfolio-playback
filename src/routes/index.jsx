@@ -124,6 +124,11 @@ function Index() {
   /* El escenario 3D sigue la sección visible al hacer scroll */
   useEffect(() => {
     const onScroll = () => {
+      const doc = document.documentElement;
+      if (window.scrollY + window.innerHeight >= doc.scrollHeight - 4) {
+        setIdx(TRACKS.length - 1);
+        return;
+      }
       const mark = window.scrollY + window.innerHeight * 0.45;
       let current = 0;
       TRACKS.forEach((t, i) => {
