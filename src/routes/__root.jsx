@@ -49,7 +49,7 @@ function ErrorComponent({ error, reset }) {
           >
             Try again
           </button>
-          <a href="/" className="btn-outline">Go home</a>
+          <a href={import.meta.env.BASE_URL} className="btn-outline">Go home</a>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@ export const Route = createRootRouteWithContext()({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: `${import.meta.env.BASE_URL}favicon.jpg`, type: "image/jpeg" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" },
     ],
   }),

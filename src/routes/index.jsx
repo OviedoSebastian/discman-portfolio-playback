@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Center, Environment, OrbitControls } from "@react-three/drei";
 import { education, experience, languages, tools } from "../data/portfolioData";
@@ -20,14 +20,14 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const getAudioSrc = (fileName) =>
-  AUDIO_MODULES[`../audio/${fileName}`] ?? `${import.meta.env.BASE_URL}audio/${fileName}`;
-
 // Resuelve automáticamente las rutas relativas "../audio/*.mp3" al compilar con Vite
 const AUDIO_MODULES = import.meta.glob("../audio/*.mp3", {
   eager: true,
   import: "default",
 });
+
+const getAudioSrc = (fileName) =>
+  AUDIO_MODULES[`../audio/${fileName}`] ?? `${import.meta.env.BASE_URL}audio/${fileName}`;
 
 const TRACKS = [
   { n: "01", id: "hero", name: "Hero", song: "HOME - Resonance", dur: "0:38", src: getAudioSrc("Resonance - Home.mp3") },
@@ -81,7 +81,9 @@ function Player3D({ idx, setIdx, playing, setPlaying, setMuted, progress, timeLa
         >
           <ambientLight intensity={0.7} />
           <directionalLight position={[4, 6, 5]} intensity={1.2} />
-          <Environment preset="city" />
+          <Suspense fallback={null}>
+            <Environment preset="city" />
+          </Suspense>
 
           <OrbitControls
             makeDefault
@@ -91,23 +93,25 @@ function Player3D({ idx, setIdx, playing, setPlaying, setMuted, progress, timeLa
             dampingFactor={0.05}
           />
 
-          <Center>
-            <MediaPlayer
-              scale={16}
-              track={currentTrack}
-              totalTracks={TRACKS.length}
-              playing={playing}
-              progress={progress}
-              timeLabel={timeLabel}
-              onPlay={() => {
-                setMuted(false);
-                setPlaying(true);
-              }}
-              onPause={() => setPlaying(false)}
-              onNext={() => go(1)}
-              onPrev={() => go(-1)}
-            />
-          </Center>
+          <Suspense fallback={null}>
+            <Center>
+              <MediaPlayer
+                scale={16}
+                track={currentTrack}
+                totalTracks={TRACKS.length}
+                playing={playing}
+                progress={progress}
+                timeLabel={timeLabel}
+                onPlay={() => {
+                  setMuted(false);
+                  setPlaying(true);
+                }}
+                onPause={() => setPlaying(false)}
+                onNext={() => go(1)}
+                onPrev={() => go(-1)}
+              />
+            </Center>
+          </Suspense>
         </Canvas>
       )}
     </div>
@@ -235,24 +239,65 @@ function Index() {
 
   return (
     <>
-      {mounted && <Background3D track={idx} />}
+      {mounted && (
+        <Suspense fallback={null}>
+          <Background3D track={idx} />
+        </Suspense>
+      )}
       <div className="page">
         <header className="header">
-          <div className="header-logo">LOGO</div>
+          <button
+            type="button"
+            onClick={() => {
+              setIdx(0);
+              scrollTo("hero");
+            }}
+            className="header-logo"
+            title="Volver al inicio"
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}favicon.jpg`}
+              alt="Sebastian Oviedo Logo"
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: 8,
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+          </button>
+
           <div className="header-status">
             {playing ? "● Playing:" : "❚❚ Paused:"} Track {TRACKS[idx].n} {TRACKS[idx].name}
           </div>
-          <button onClick={() => setMuted((m) => !m)} className="header-btn">
+          <button type="button" onClick={() => setMuted((m) => !m)} className="header-btn">
             {muted ? "🔇 Mute" : "🔊 Sound"}
           </button>
           <nav className="header-nav">
             {TRACKS.slice(1).map((t, i) => (
-              <a key={t.id} href={`#${t.id}`} onClick={() => setIdx(i + 1)}>
+              <a
+                key={t.id}
+                href={`#${t.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIdx(i + 1);
+                  scrollTo(t.id);
+                }}
+              >
                 {t.name}
               </a>
             ))}
           </nav>
-          <button className="header-btn header-burger">☰</button>
+          <button type="button" className="header-btn header-burger">☰</button>
         </header>
 
         <section id="hero" className="hero">
@@ -262,8 +307,28 @@ function Index() {
             <p className="hero-role">TECNÓLOGO EN DESARROLLO DE SOFTWARE - ESTUDIANTE ING DE SISTEMAS</p>
             <p className="hero-tagline">Web 3D e interacción táctil: dándole presencia física al código</p>
             <div className="hero-actions">
-              <a href="#projects" onClick={() => setIdx(2)} className="btn-primary">Ver Proyectos</a>
-              <a href="#contact" onClick={() => setIdx(5)} className="btn-outline">Contactar</a>
+              <a
+                href="#projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIdx(2);
+                  scrollTo("projects");
+                }}
+                className="btn-primary"
+              >
+                Ver Proyectos
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIdx(5);
+                  scrollTo("contact");
+                }}
+                className="btn-outline"
+              >
+                Contactar
+              </a>
             </div>
           </div>
           <div className="hero-diskman">
@@ -392,7 +457,7 @@ function Index() {
               <label>Mensaje<textarea rows={5} /></label>
               <div><button className="btn-primary">Enviar</button></div>
             </form>
-            
+
             <div className="stack">
               <p className="contact-cta">¿Construimos algo juntos?</p>
               <ul className="contact-list">
@@ -417,8 +482,6 @@ function Index() {
                 <p>Disponible para trabajo remoto · Cali / Jamundí, Colombia</p>
               </div>
             </div>
-
-
           </div>
         </Section>
         <footer className="footer">© Sebastian Oviedo · End of Disc</footer>
