@@ -21,16 +21,19 @@ export const Route = createFileRoute("/")({
 });
 
 const TRACKS = [
-  { n: "01", id: "hero", name: "Hero", song: "HOME - Resonance", dur: "0:38", src: "../audio/Resonance - Home.mp3" },
-  { n: "02", id: "about", name: "Sobre Mí", song: "BoC - Roygbiv", dur: "0:46", src: "../audio/Roygbiv - Boards of Canada.mp3" },
-  { n: "03", id: "projects", name: "Proyectos", song: "Daft Punk - Veridis Quo", dur: "1:08", src: "../audio/Daft Punk - Veridis Quo.mp3" },
-  { n: "04", id: "skills", name: "Habilidades", song: "Aphex Twin - Alberto Balsalm", dur: "0:41", src: "../audio/Alberto Balsalm - Aphex Twin.mp3" },
-  { n: "05", id: "timeline", name: "Experiencia", song: "Bonobo - Kiara", dur: "1:10", src: "../audio/Kiara - Bonobo.mp3" },
-  { n: "06", id: "contact", name: "Contacto", song: "HOME - Finally Landing", dur: "1:14", src: "../audio/We're Finally Landing - Release.mp3" },
+  { n: "01", id: "hero", name: "Hero", song: "HOME - Resonance", dur: "0:38", src: getAudioSrc("Resonance - Home.mp3") },
+  { n: "02", id: "about", name: "Sobre Mí", song: "BoC - Roygbiv", dur: "0:46", src: getAudioSrc("Roygbiv - Boards of Canada.mp3") },
+  { n: "03", id: "projects", name: "Proyectos", song: "Daft Punk - Veridis Quo", dur: "1:08", src: getAudioSrc("Daft Punk - Veridis Quo.mp3") },
+  { n: "04", id: "skills", name: "Habilidades", song: "Aphex Twin - Alberto Balsalm", dur: "0:41", src: getAudioSrc("Alberto Balsalm - Aphex Twin.mp3") },
+  { n: "05", id: "timeline", name: "Experiencia", song: "Bonobo - Kiara", dur: "1:10", src: getAudioSrc("Kiara - Bonobo.mp3") },
+  { n: "06", id: "contact", name: "Contacto", song: "HOME - Finally Landing", dur: "1:14", src: getAudioSrc("We're Finally Landing - Release.mp3") },
 ];
 
 // Resuelve automáticamente las rutas relativas "../audio/*.mp3" al compilar con Vite
-const AUDIO_MODULES = import.meta.glob("../audio/*.mp3", { eager: true, import: "default" });
+const AUDIO_MODULES = import.meta.glob<string>("../audio/*.mp3", {
+  eager: true,
+  import: "default",
+});
 
 function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });

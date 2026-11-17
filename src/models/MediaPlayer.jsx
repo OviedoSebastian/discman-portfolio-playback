@@ -16,7 +16,7 @@ const MediaPlayer = ({
   ...props
 }) => {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/sansa_clip/scene.gltf')
+  const { nodes, materials, animations } = useGLTF(`${import.meta.env.BASE_URL}sansa_clip/scene.gltf`)
   const { actions } = useAnimations(animations, group)
 
   // Crear canvas y textura una sola vez
