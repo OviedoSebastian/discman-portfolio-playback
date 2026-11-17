@@ -20,6 +20,15 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const getAudioSrc = (fileName) =>
+  AUDIO_MODULES[`../audio/${fileName}`] ?? `${import.meta.env.BASE_URL}audio/${fileName}`;
+
+// Resuelve automáticamente las rutas relativas "../audio/*.mp3" al compilar con Vite
+const AUDIO_MODULES = import.meta.glob("../audio/*.mp3", {
+  eager: true,
+  import: "default",
+});
+
 const TRACKS = [
   { n: "01", id: "hero", name: "Hero", song: "HOME - Resonance", dur: "0:38", src: getAudioSrc("Resonance - Home.mp3") },
   { n: "02", id: "about", name: "Sobre Mí", song: "BoC - Roygbiv", dur: "0:46", src: getAudioSrc("Roygbiv - Boards of Canada.mp3") },
@@ -28,12 +37,6 @@ const TRACKS = [
   { n: "05", id: "timeline", name: "Experiencia", song: "Bonobo - Kiara", dur: "1:10", src: getAudioSrc("Kiara - Bonobo.mp3") },
   { n: "06", id: "contact", name: "Contacto", song: "HOME - Finally Landing", dur: "1:14", src: getAudioSrc("We're Finally Landing - Release.mp3") },
 ];
-
-// Resuelve automáticamente las rutas relativas "../audio/*.mp3" al compilar con Vite
-const AUDIO_MODULES = import.meta.glob<string>("../audio/*.mp3", {
-  eager: true,
-  import: "default",
-});
 
 function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
